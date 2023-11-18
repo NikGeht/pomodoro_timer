@@ -1,6 +1,6 @@
 body {
    font-family: Arial, sans-serif;
-   background-color: #2A3439;
+   background-color: indianred;
    color: #ffffff;
    display: flex;
    justify-content: center;
@@ -30,7 +30,7 @@ button {
    border: none;
    border-radius: 5px;
    color: #ffffff;
-   background-color: #4CAF50;
+   background-color: darksalmon;
    cursor: pointer;
 }
 
@@ -38,3 +38,16 @@ button:hover {
    background-color: #45a049;
 }
 
+span {
+  padding: 0px;
+  margin: 0px;
+
+}
+
+.bg-green {
+  background-color: cadetblue;
+}
+
+.btn-green {
+  background-color: forestgreen;
+}

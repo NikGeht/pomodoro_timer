@@ -1,31 +1,51 @@
 const startButton = document.querySelector('#pomodoro-start');
-const pauseButton = document.querySelector('#pomodoro-pause');
+const breakButton = document.querySelector('#pomodoro-break');
 const stopButton = document.querySelector('#pomodoro-stop');
 const pomodoroTimer = document.querySelector('#pomodoro-timer');
+const pomodoroContainer = document.querySelector('#body');
+let currentTimeLeftInSession = 1500;
+let clockTimer;
+let isClockRunning = false;
 // START
 startButton.addEventListener('click', () => {
  toggleClock();
 })
 
 // PAUSE
-pauseButton.addEventListener('click', () => {
- toggleClock();
+breakButton.addEventListener('click', () => {
+  pomodoroContainer.classList.add('bg-green');
+  currentTimeLeftInSession = 300;
+  clockTimer = setInterval(() => {
+    currentTimeLeftInSession--;
+    if (currentTimeLeftInSession === 0) {
+      clearInterval(clockTimer);
+      isClockRunning = false;
+      currentTimeLeftInSession = 1500;
+      displayCurrentTimeLeftInSession();
+      pomodoroContainer.classList.remove('bg-green');
+      
+    }
+
+    displayCurrentTimeLeftInSession();
+  }, 1000)
+  isClockRunning = true;
+  
 })
 
 // STOP
 stopButton.addEventListener('click', () => {
  toggleClock(reset=true);
+  pomodoroContainer.classList.remove('bg-green');
+  currentTimeLeftInSession = 1500;
+  displayCurrentTimeLeftInSession();
 })
-let isClockRunning = false;
-let currentTimeLeftInSession = 1500; // 25 minutes in seconds
-let clockTimer;
 
 const toggleClock = (reset) => {
  if (reset) {
    // Stop the clock
    clearInterval(clockTimer);
    isClockRunning = false;
-   currentTimeLeftInSession = 1500;
+   currentTimeLeftInSession = currentTimeLeftInSession;
     displayCurrentTimeLeftInSession();// Reset the timer
  } else {
    if (isClockRunning === true) {
@@ -54,7 +74,8 @@ const displayCurrentTimeLeftInSession = () => {
    return time < 10 ? `0${time}` : time
  }
  if (hours > 0) result += `${hours}:`
- result += `${addLeadingZeroes(minutes)}:${addLeadingZeroes(seconds)}`
+ result += `${addLeadingZeroes(minutes)} : ${addLeadingZeroes(seconds)}`
+  
  pomodoroTimer.innerText = result.toString();
 }
 
